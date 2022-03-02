@@ -1,0 +1,11 @@
+use super::ast::Ast;
+use super::num::Num;
+
+grammar;
+
+pub Ast: Ast = {
+    () => Ast::NOP,
+    Num
+}
+
+Num: Ast = r"\d+[bdox]" => Ast::Literal(Num::from_str(<>));
