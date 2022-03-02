@@ -6,17 +6,9 @@ extern crate lalrpop_util;
 
 lalrpop_mod!(pub parser); // synthesized by LALRPOP
 
-use num::Num;
+pub use ast::AstResult;
+use lalrpop_util::{lexer::Token, ParseError};
 
-pub enum RunResult {
-    Value(Num),
-    ParseError,
-}
-
-pub fn run(input: &str) -> RunResult {
-    if let Ok(ast) = parser::AstParser::new().parse(input) {
-        RunResult::Value(ast.eval())
-    } else {
-        RunResult::ParseError
-    }
+pub fn run(input: &str) -> Result<AstResult, ParseError<usize, Token, &str>> {
+    Ok(parser::AstParser::new().parse(input)?.eval())
 }

@@ -1,4 +1,6 @@
-#[derive(Debug)]
+use std::num::ParseIntError;
+
+#[derive(Debug, Clone, Copy)]
 enum Base {
     Bin,
     Oct,
@@ -6,19 +8,17 @@ enum Base {
     Dec,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Num {
     base: Base,
-    precision: u64,
-    val: f64,
+    val: i64,
 }
 
 impl Num {
-    pub fn from_str(s: &str) -> Self {
-        Self {
+    pub fn from_str(s: &str) -> Result<Self, ParseIntError> {
+        Ok(Self {
             base: Base::Hex,
-            precision: 69,
-            val: 420.0,
-        }
+            val: s[..s.len() - 1].parse()?,
+        })
     }
 }

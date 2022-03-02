@@ -6,8 +6,16 @@ pub enum Ast {
     NOP,
 }
 
+pub enum AstResult {
+    Value(Num),
+    NOP,
+}
+
 impl Ast {
-    pub fn eval(&self) -> Num {
-        Num::from_str("hello")
+    pub fn eval(&self) -> AstResult {
+        match self {
+            Self::Literal(num) => AstResult::Value(num.clone()),
+            Self::NOP => AstResult::NOP,
+        }
     }
 }

@@ -1,5 +1,6 @@
 use super::ast::Ast;
 use super::num::Num;
+use lalrpop_util::ParseError;
 
 grammar;
 
@@ -8,4 +9,5 @@ pub Ast: Ast = {
     Num
 }
 
-Num: Ast = r"\d+[bdox]" => Ast::Literal(Num::from_str(<>));
+Num: Ast = r"\d+[bdox]" =>? match Num::from_str(<>) {Ok(num)=>
+    Ok(Ast::Literal(num)),Err(_)=>Err(ParseError::User{error:"invalid literal"}) };
