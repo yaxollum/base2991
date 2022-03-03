@@ -30,5 +30,5 @@ Mul:Ast={
     Num
 }
 
-Num: Ast = r"[0-9a-fA-F]+[bdoxh]" =>? match Num::from_str(<>) {Some(num)=>
+Num: Ast = r"[0-9a-fA-F]+(\.[0-9a-fA-F]+)?[bdoxh]" =>? match Num::from_str(<>) {Some(num)=>
     Ok(Ast::Literal(num)),None=>Err(ParseError::User{error:"invalid literal"}) };
