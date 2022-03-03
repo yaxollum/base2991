@@ -6,8 +6,8 @@ fn main() {
     for line in stdin.lock().lines() {
         match run(&line.unwrap()) {
             Ok(ast_result) => match ast_result {
-                AstResult::Value(val) => println!("{:?}", val),
-                AstResult::NOP => {}
+                Ok(val) => println!("{:?}", val),
+                Err(_) => {}
             },
             Err(e) => {
                 eprintln!("SyntaxError: {}", e);
