@@ -6,6 +6,7 @@ pub enum Ast {
     BaseConv(Box<Ast>, u32),
     Mul(Box<Ast>, Box<Ast>),
     Add(Box<Ast>, Box<Ast>),
+    Sub(Box<Ast>, Box<Ast>),
     NOP,
 }
 
@@ -21,6 +22,7 @@ impl Ast {
             Self::BaseConv(a, new_base) => Ok(a.eval()?.convert_base(*new_base)),
             Self::Mul(a, b) => Ok(a.eval()? * b.eval()?),
             Self::Add(a, b) => Ok(a.eval()? + b.eval()?),
+            Self::Sub(a, b) => Ok(a.eval()? - b.eval()?),
             Self::NOP => Err(AstError::NOP),
         }
     }

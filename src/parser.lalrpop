@@ -20,6 +20,7 @@ BaseConv:Ast={
 
 Add: Ast={
     <a:Mul> "+" <b:Add>=>Ast::Add(Box::new(a),Box::new(b)),
+    <a:Mul> "-" <b:Add>=>Ast::Sub(Box::new(a),Box::new(b)),
     Mul
 }
 

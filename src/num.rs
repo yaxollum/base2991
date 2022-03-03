@@ -1,4 +1,4 @@
-use std::ops::{Add, Mul};
+use std::ops::{Add, Mul, Sub};
 
 #[derive(Debug, Clone)]
 pub struct Num {
@@ -22,6 +22,16 @@ impl Add for Num {
         Self {
             base: self.base,
             val: self.val + rhs.val,
+        }
+    }
+}
+
+impl Sub for Num {
+    type Output = Self;
+    fn sub(self, rhs: Self) -> Self {
+        Self {
+            base: self.base,
+            val: self.val - rhs.val,
         }
     }
 }
