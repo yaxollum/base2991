@@ -19,12 +19,12 @@ BaseConv:Ast={
 }
 
 Add: Ast={
-    <a:Mul> "+" <b:Mul>=>Ast::Add(Box::new(a),Box::new(b)),
+    <a:Mul> "+" <b:Add>=>Ast::Add(Box::new(a),Box::new(b)),
     Mul
 }
 
 Mul:Ast={
-    <a:Num> "*" <b:Num>=>Ast::Mul(Box::new(a),Box::new(b)),
+    <a:Num> "*" <b:Mul>=>Ast::Mul(Box::new(a),Box::new(b)),
     Num
 }
 

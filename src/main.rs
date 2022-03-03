@@ -1,4 +1,4 @@
-use base2991::{run, AstResult};
+use base2991::run;
 use std::io::{self, BufRead};
 
 fn main() {
