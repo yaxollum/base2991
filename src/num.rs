@@ -1,9 +1,9 @@
-use std::ops::{Add, Mul, Sub};
+use std::ops::{Add, Div, Mul, Sub};
 
 #[derive(Debug, Clone)]
 pub struct Num {
     base: u32,
-    val: u64,
+    val: f64,
 }
 
 impl Mul for Num {
@@ -12,6 +12,16 @@ impl Mul for Num {
         Self {
             base: self.base,
             val: self.val * rhs.val,
+        }
+    }
+}
+
+impl Div for Num {
+    type Output = Self;
+    fn div(self, rhs: Self) -> Self {
+        Self {
+            base: self.base,
+            val: self.val / rhs.val,
         }
     }
 }
@@ -47,7 +57,7 @@ impl Num {
         }?;
         Some(Self {
             base,
-            val: u64::from_str_radix(&s[..s.len() - 1], base).ok()?,
+            val: u64::from_str_radix(&s[..s.len() - 1], base).ok()? as f64,
         })
     }
     pub fn convert_base(&self, new_base: u32) -> Self {

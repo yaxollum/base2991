@@ -26,6 +26,7 @@ Add: Ast={
 
 Mul:Ast={
     <a:Num> "*" <b:Mul>=>Ast::Mul(Box::new(a),Box::new(b)),
+    <a:Num> "/" <b:Mul>=>Ast::Div(Box::new(a),Box::new(b)),
     Num
 }
 
