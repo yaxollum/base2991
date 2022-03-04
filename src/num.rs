@@ -1,3 +1,4 @@
+use std::fmt;
 use std::ops::{Add, Div, Mul, Sub};
 
 #[derive(Debug, Clone)]
@@ -70,5 +71,41 @@ impl Num {
             base: new_base,
             val: self.val,
         }
+    }
+}
+
+impl fmt::Display for Num {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const PRECISION: i32 = 10;
+        let base = self.base as i64;
+        let mut val_dec = self.val.trunc() as i64;
+        let mut val_frac = (self.val.fract() * (self.base as f64).powi(PRECISION)).round() as i64;
+        let digits = b"0123456789abcdef";
+        let mut dec_chars = Vec::new();
+        if val_dec == 0 {
+            dec_chars.push(b'0');
+        }
+        while val_dec != 0 {
+            dec_chars.push(digits[(val_dec % base) as usize]);
+            val_dec /= base;
+        }
+        let mut frac_chars = Vec::new();
+        while val_frac != 0 {
+            frac_chars.push(digits[(val_frac % base) as usize]);
+            val_frac /= base;
+        }
+
+        for c in dec_chars.iter().rev() {
+            write!(f, "{}", *c as char)?;
+        }
+        write!(f, ".")?;
+
+        while frac_chars.len() < PRECISION as usize {
+            frac_chars.push(b'0');
+        }
+        for c in frac_chars.iter().rev() {
+            write!(f, "{}", *c as char)?;
+        }
+        write!(f, "_{}", base)
     }
 }
