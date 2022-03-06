@@ -66,6 +66,15 @@ impl Num {
         };
         Some(Self { base, val })
     }
+    pub fn from_char_literal(s: &str) -> Self {
+        Self {
+            base: 10,
+            val: s.as_bytes()[1] as f64,
+        }
+    }
+    pub fn as_u8(&self) -> u8 {
+        self.val as u8
+    }
     pub fn convert_base(&self, new_base: u32) -> Self {
         Self {
             base: new_base,
@@ -98,10 +107,12 @@ impl fmt::Display for Num {
         for c in dec_chars.iter().rev() {
             write!(f, "{}", *c as char)?;
         }
-        write!(f, ".")?;
 
-        while frac_chars.len() < PRECISION as usize {
-            frac_chars.push(b'0');
+        if !frac_chars.is_empty() {
+            write!(f, ".")?;
+            while frac_chars.len() < PRECISION as usize {
+                frac_chars.push(b'0');
+            }
         }
         for c in frac_chars.iter().rev() {
             write!(f, "{}", *c as char)?;

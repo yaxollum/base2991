@@ -7,6 +7,7 @@ extern crate lalrpop_util;
 lalrpop_mod!(pub parser); // synthesized by LALRPOP
 
 pub use ast::AstResult;
+pub use ast::AstSpecial;
 use lalrpop_util::{lexer::Token, ParseError};
 
 pub fn run(input: &str) -> Result<AstResult, ParseError<usize, Token, &str>> {
